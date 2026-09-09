@@ -63,7 +63,7 @@ export default function Navbar() {
 
   return (
     <header className="fixed inset-x-0 top-6 z-30 px-4 sm:px-6">
-      <div className="mx-auto flex max-w-6xl items-center justify-between gap-4">
+      <div className="mx-auto flex max-w-7xl items-center justify-between gap-4">
         <div className="flex h-14 items-center gap-4 rounded-full border border-black/10 bg-white pl-6 pr-3 backdrop-blur">
           <Link href="/" className="flex items-center">
             <Image

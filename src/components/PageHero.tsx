@@ -1,12 +1,22 @@
 import Image from "next/image";
 
-export default function PropertiesHero() {
+export default function PageHero({
+  title,
+  description,
+  image,
+  imageAlt,
+}: {
+  title: string;
+  description: string;
+  image: string;
+  imageAlt: string;
+}) {
   return (
     <section className="mx-auto max-w-7xl px-6 sm:px-10 lg:px-16">
       <div className="relative flex min-h-[360px] flex-col justify-end overflow-hidden rounded-[2rem] bg-neutral-950 px-6 pb-10 pt-10 sm:min-h-[420px] sm:px-10 lg:min-h-[480px] lg:px-16">
         <Image
-          src="/hero-img.jpg"
-          alt="DEGSS property"
+          src={image}
+          alt={imageAlt}
           fill
           priority
           sizes="100vw"
@@ -19,11 +29,10 @@ export default function PropertiesHero() {
 
         <div className="relative z-10 flex flex-col items-start justify-between gap-6 lg:flex-row lg:items-end">
           <h1 className="text-5xl font-bold leading-[0.95] tracking-tight text-white sm:text-6xl md:text-7xl">
-            Properties
+            {title}
           </h1>
           <p className="max-w-sm text-lg leading-7 text-white/70 lg:text-right">
-            Find the perfect property with detailed listings tailored to your
-            needs and lifestyle.
+            {description}
           </p>
         </div>
       </div>
