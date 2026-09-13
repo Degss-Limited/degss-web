@@ -24,7 +24,7 @@ export default function Footer() {
     <footer className="bg-black text-white">
       <div className="mx-auto max-w-7xl px-6 py-20 sm:px-10 lg:px-16">
         <div className="flex flex-col gap-16 lg:flex-row lg:justify-between">
-          <div className="w-full shrink-0 lg:w-[420px]">
+          <div className="w-full shrink-0 lg:w-[320px]">
             <h2 className="text-2xl font-semibold">Subscribe to our newsletter</h2>
             <form className="mt-6 flex w-full items-center rounded-full border border-white/20 bg-transparent pl-6 pr-1.5 py-1.5">
               <input
@@ -122,9 +122,14 @@ export default function Footer() {
 
       <div className="mx-auto flex max-w-7xl flex-col-reverse items-center gap-4 border-t border-white/10 px-6 py-6 text-sm text-white/50 sm:flex-row sm:justify-between sm:px-10 lg:px-16">
         <p>&copy; {new Date().getFullYear()} DEGSS. All rights reserved.</p>
-        <Link href="/terms" className="transition-colors hover:text-white">
-          Terms &amp; Conditions
-        </Link>
+        <div className="flex items-center gap-6">
+          <Link href="/terms" className="transition-colors hover:text-white">
+            Terms &amp; Conditions
+          </Link>
+          <Link href="/privacy" className="transition-colors hover:text-white">
+            Privacy Policy
+          </Link>
+        </div>
       </div>
     </footer>
   );
