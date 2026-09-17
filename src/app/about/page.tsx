@@ -1,13 +1,16 @@
-import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
+import Counter from "@/components/Counter";
+import { buildMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "About | DEGSS",
+export const metadata = buildMetadata({
+  title: "About Us",
   description:
-    "DEGSS Limited is a Lagos-based real estate company helping people find, compare, and secure properties they're proud to call home.",
-};
+    "DEGSS Limited is a Lagos-based real estate, land banking, and community-development company helping people find, invest in, and build lasting wealth through property.",
+  path: "/about",
+  image: "/abt-hero.jpg",
+});
 
 export default function AboutPage() {
   return (
@@ -15,7 +18,10 @@ export default function AboutPage() {
       <Navbar />
 
       <main className="flex-1 bg-neutral-50 pb-24 pt-32 sm:pt-26">
-        <section className="mx-auto max-w-8xl px-10">
+        <section
+          className="mx-auto max-w-8xl px-4 sm:px-6 lg:px-10"
+          data-navbar-variant="dark"
+        >
           <div className="relative flex min-h-[360px] flex-col justify-end overflow-hidden rounded-[2rem] bg-neutral-950 px-6 pb-10 pt-10 sm:min-h-[420px] sm:px-10 lg:min-h-[580px] lg:px-16">
             <Image
               src="/abt-hero.jpg"
@@ -44,7 +50,7 @@ export default function AboutPage() {
         <section className="mx-auto max-w-7xl px-6 pt-20 sm:px-10 sm:pt-28 lg:px-16">
           <div className="flex items-center justify-between">
             <span className="text-sm font-medium uppercase tracking-[0.2em] text-neutral-400">
-              /Mission &amp; Vision
+              Mission &amp; Vision
             </span>
             <span className="text-sm font-medium text-neutral-400">(01)</span>
           </div>
@@ -210,8 +216,8 @@ landbanking, agro-real estate, housing and development.
               { value: "300+", label: "Families Housed" },
             ].map(({ value, label }) => (
               <div key={label}>
-                <p className="text-5xl font-bold tracking-tight text-neutral-950 sm:text-6xl">
-                  {value}
+                <p className="text-5xl font-bold tabular-nums tracking-tight text-neutral-950 sm:text-6xl">
+                  <Counter value={value} />
                 </p>
                 <p className="mt-2 text-sm text-neutral-500">{label}</p>
               </div>

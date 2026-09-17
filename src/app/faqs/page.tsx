@@ -1,12 +1,13 @@
-import type { Metadata } from "next";
 import Navbar from "@/components/Navbar";
 import FaqAccordion from "./FaqAccordion";
+import { buildMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "FAQs | DEGSS",
+export const metadata = buildMetadata({
+  title: "FAQs",
   description:
-    "Answers to common questions about buying, renting, and managing property with DEGSS.",
-};
+    "Answers to common questions about buying, investing, and managing property with DEGSS Limited.",
+  path: "/faqs",
+});
 
 const faqs = [
   {

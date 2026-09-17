@@ -1,14 +1,15 @@
-import type { Metadata } from "next";
 import Navbar from "@/components/Navbar";
 import PageHero from "@/components/PageHero";
 import PropertyCard from "@/components/PropertyCard";
 import { properties, unsplash } from "@/data/properties";
+import { buildMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Properties | DEGSS",
+export const metadata = buildMetadata({
+  title: "Properties",
   description:
-    "Browse homes and estates available through DEGSS — find, compare, and secure the right property.",
-};
+    "Browse homes and estates available through DEGSS Limited — find, compare, and secure the right property in Lagos.",
+  path: "/properties",
+});
 
 export default function PropertiesPage() {
   return (

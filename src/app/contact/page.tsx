@@ -1,12 +1,14 @@
-import type { Metadata } from "next";
 import Image from "next/image";
 import Navbar from "@/components/Navbar";
+import { buildMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Contact | DEGSS",
+export const metadata = buildMetadata({
+  title: "Contact Us",
   description:
-    "Get in touch with DEGSS — whether you're buying, renting, or just exploring, we're here to guide you every step of the way.",
-};
+    "Get in touch with DEGSS Limited — whether you're buying, investing, or just exploring, we're here to guide you every step of the way.",
+  path: "/contact",
+  image: "/contact-hero.jpg",
+});
 
 const address =
   "4, Adedayo Ogidan Close, Fidiso Estate (By Green Park Estate) Abijo, Ibeju-Lekki, Lagos.";
@@ -35,7 +37,10 @@ export default function ContactPage() {
       <Navbar />
 
       <main className="flex-1 bg-neutral-50 pb-24 pt-32 sm:pt-26">
-        <section className="mx-auto max-w-8xl px-10">
+        <section
+          className="mx-auto max-w-8xl px-4 sm:px-6 lg:px-10"
+          data-navbar-variant="dark"
+        >
           <div className="relative flex min-h-[360px] flex-col justify-end overflow-hidden rounded-[2rem] bg-neutral-950 px-6 pb-10 pt-10 sm:min-h-[420px] sm:px-10 lg:min-h-[580px] lg:px-16">
             <Image
               src="/contact-hero.jpg"
@@ -111,7 +116,7 @@ export default function ContactPage() {
 
               <button
                 type="submit"
-                className="w-full rounded-full bg-neutral-950 py-3.5 text-sm font-medium text-white transition-colors hover:bg-neutral-800"
+                className="w-full rounded-full bg-[#39548b] py-3.5 text-sm font-medium text-white transition-colors hover:bg-[#263d6b]"
               >
                 Submit
               </button>

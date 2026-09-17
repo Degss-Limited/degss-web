@@ -1,11 +1,12 @@
-import type { Metadata } from "next";
 import Navbar from "@/components/Navbar";
+import { buildMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Privacy Policy | DEGSS",
+export const metadata = buildMetadata({
+  title: "Privacy Policy",
   description:
-    "How DEGSS collects, uses, and protects your personal information.",
-};
+    "How DEGSS Limited collects, uses, and protects your personal information.",
+  path: "/privacy",
+});
 
 type BodyItem = string | { label: string; value: string };
 

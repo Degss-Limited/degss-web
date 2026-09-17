@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import Navbar from "@/components/Navbar";
 import PropertyGallery from "@/components/PropertyGallery";
 import { getProperty, properties } from "@/data/properties";
+import { buildMetadata, SITE_URL } from "@/lib/seo";
 
 export function generateStaticParams() {
   return properties.map((property) => ({ slug: property.slug }));
@@ -16,13 +18,15 @@ export async function generateMetadata({
   const property = getProperty(slug);
 
   if (!property) {
-    return { title: "Property | DEGSS" };
+    return { title: "Property" };
   }
 
-  return {
-    title: `${property.title} | DEGSS`,
-    description: property.description,
-  };
+  return buildMetadata({
+    title: property.title,
+    description: `${property.description} ${property.location} — ${property.price}.`,
+    path: `/properties/${property.slug}`,
+    image: property.image,
+  });
 }
 
 export default async function PropertyPage({
@@ -54,8 +58,39 @@ export default async function PropertyPage({
     neighborhood,
   } = property;
 
+  const listingJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "RealEstateListing",
+    name: title,
+    description: property.description,
+    url: `${SITE_URL}/properties/${property.slug}`,
+    image: gallery.map((src) => `${SITE_URL}${src}`),
+    numberOfRooms: beds,
+    numberOfBathroomsTotal: baths,
+    floorSize: { "@type": "QuantitativeValue", value: sqft, unitCode: "FTK" },
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: neighborhood.city,
+      addressRegion: "Lagos",
+      addressCountry: "NG",
+    },
+    offers: {
+      "@type": "Offer",
+      price: price.replace(/[^0-9.]/g, ""),
+      priceCurrency: "NGN",
+      availability:
+        status === "Available"
+          ? "https://schema.org/InStock"
+          : "https://schema.org/LimitedAvailability",
+    },
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(listingJsonLd) }}
+      />
       <Navbar />
 
       <main className="flex-1 bg-neutral-50 pb-24 pt-32 sm:pt-36">
@@ -77,7 +112,7 @@ export default async function PropertyPage({
               <p className="text-xs font-semibold uppercase tracking-[0.2em] text-neutral-500">
                 {location}
               </p>
-              <h1 className="mt-2 text-4xl font-bold tracking-tight text-neutral-950 sm:text-5xl">
+              <h1 className="mt-2 text-4xl font-bold tracking-tight text-[#39548b] sm:text-5xl">
                 {title}
               </h1>
               <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-neutral-600">
@@ -95,7 +130,7 @@ export default async function PropertyPage({
               <p className="text-xs font-semibold uppercase tracking-[0.2em] text-neutral-500">
                 Price
               </p>
-              <p className="text-3xl font-bold text-neutral-950">{price}</p>
+              <p className="text-3xl font-bold text-[#39548b]">{price}</p>
               <span className="rounded-full bg-neutral-100 px-3 py-1 text-xs font-medium text-neutral-700">
                 {status}
               </span>
@@ -105,7 +140,7 @@ export default async function PropertyPage({
           <div className="mt-10 grid grid-cols-1 gap-10 lg:grid-cols-3">
             <div className="space-y-10 lg:col-span-2">
               <div>
-                <h2 className="text-2xl font-bold tracking-tight text-neutral-950">
+                <h2 className="text-2xl font-bold tracking-tight text-[#39548b]">
                   About this property
                 </h2>
                 <div className="mt-4 space-y-4 text-neutral-600">
@@ -118,7 +153,7 @@ export default async function PropertyPage({
               </div>
 
               <div>
-                <h2 className="text-2xl font-bold tracking-tight text-neutral-950">
+                <h2 className="text-2xl font-bold tracking-tight text-[#39548b]">
                   Property features
                 </h2>
                 <div className="mt-4 grid grid-cols-1 gap-x-6 gap-y-3 sm:grid-cols-2">
@@ -135,12 +170,20 @@ export default async function PropertyPage({
               </div>
 
               <div>
-                <h2 className="text-2xl font-bold tracking-tight text-neutral-950">
+                <h2 className="text-2xl font-bold tracking-tight text-[#39548b]">
                   The neighborhood
                 </h2>
-                <div className="mt-4 flex items-start gap-4 rounded-3xl bg-neutral-950 p-6 text-white sm:p-8">
-                  <MapPinIcon className="mt-1 h-5 w-5 shrink-0 text-white/70" />
-                  <div>
+                <div className="relative flex items-start gap-4 overflow-hidden rounded-3xl bg-[#39548b] p-6 text-white sm:p-8">
+                  <Image
+                    src="/icon-light.png"
+                    alt=""
+                    aria-hidden="true"
+                    width={400}
+                    height={400}
+                    className="pointer-events-none absolute -right-10 -top-10 h-56 w-56 opacity-10 sm:h-64 sm:w-64"
+                  />
+                  <MapPinIcon className="relative z-10 mt-1 h-5 w-5 shrink-0 text-white/70" />
+                  <div className="relative z-10">
                     <h3 className="text-lg font-semibold">
                       {neighborhood.name}
                     </h3>
@@ -156,7 +199,7 @@ export default async function PropertyPage({
             </div>
 
             <div className="space-y-6">
-              <div className="rounded-3xl bg-neutral-950 p-6 text-white sm:p-8">
+              <div className="rounded-3xl bg-[#39548b] p-6 text-white sm:p-8">
                 <h3 className="text-lg font-semibold">
                   Interested in this property?
                 </h3>

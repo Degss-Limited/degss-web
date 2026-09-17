@@ -12,8 +12,11 @@ export default function PageHero({
   imageAlt: string;
 }) {
   return (
-    <section className="mx-auto max-w-7xl px-6 sm:px-10 lg:px-16">
-      <div className="relative flex min-h-[360px] flex-col justify-end overflow-hidden rounded-[2rem] bg-neutral-950 px-6 pb-10 pt-10 sm:min-h-[420px] sm:px-10 lg:min-h-[480px] lg:px-16">
+    <section
+      className="mx-auto max-w-8xl px-4 sm:px-6 lg:px-10"
+      data-navbar-variant="dark"
+    >
+      <div className="relative flex min-h-[360px] flex-col justify-end overflow-hidden rounded-[2rem] bg-neutral-950 px-6 pb-10 pt-10 sm:min-h-[420px] sm:px-10 lg:min-h-[580px] lg:px-16">
         <Image
           src={image}
           alt={imageAlt}

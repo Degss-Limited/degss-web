@@ -21,7 +21,7 @@ const socialLinks = [
 
 export default function Footer() {
   return (
-    <footer className="bg-black text-white">
+    <footer className="bg-[#39548b] text-white" data-navbar-variant="dark">
       <div className="mx-auto max-w-7xl px-6 py-20 sm:px-10 lg:px-16">
         <div className="flex flex-col gap-16 lg:flex-row lg:justify-between">
           <div className="w-full shrink-0 lg:w-[320px]">
@@ -104,7 +104,7 @@ export default function Footer() {
           <defs>
             <linearGradient id="footer-wordmark" x1="0" y1="0" x2="0" y2="1">
               <stop offset="0%" stopColor="#ffffff" />
-              <stop offset="100%" stopColor="#6b7280" />
+              <stop offset="100%" stopColor="#39548b" />
             </linearGradient>
           </defs>
           <text

@@ -1,11 +1,12 @@
-import type { Metadata } from "next";
 import Navbar from "@/components/Navbar";
+import { buildMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Terms & Conditions | DEGSS",
+export const metadata = buildMetadata({
+  title: "Terms & Conditions",
   description:
-    "The terms and conditions governing your use of the DEGSS website and services.",
-};
+    "The terms and conditions governing your use of the DEGSS Limited website and services.",
+  path: "/terms",
+});
 
 type BodyItem = string | { label: string; value: string };
 

@@ -1,43 +1,42 @@
-import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
+import TeamGrid from "@/components/TeamGrid";
+import { buildMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Our Team | DEGSS",
+export const metadata = buildMetadata({
+  title: "Our Team",
   description:
     "Meet the people behind DEGSS Limited — the team helping clients find, compare, and secure property across Lagos.",
-};
+  path: "/about/team",
+  image: "/team-hero.jpg",
+});
 
-// NOTE: photos below are stock Unsplash portraits used as layout placeholders only —
-// they are not real DEGSS staff. Replace with actual team photos before this page goes live.
-function headshot(photoId: string) {
-  return `https://images.unsplash.com/photo-${photoId}?q=80&w=400&h=400&fit=crop&crop=faces`;
-}
 
-const departments = [
+const teamMembers = [
   {
-    name: "Executive",
-    members: [
-      { role: "Managing Director", photo: headshot("1519244703995-f4e0f30006d5") },
-      { role: "Chief Operating Officer", photo: headshot("1438761681033-6461ffad8d80") },
-    ],
+    role: "Daniel Onwuzuka",
+    department: "Managing Director",
+    photo: "/team/Daniel.jpeg",
+    bio: "A business strategist and entrepreneur with extensive experience across sales, marketing, business development and operations. As Managing Director, Daniel provides strategic direction for the organisation, driving growth, strengthening operations and developing high-performing teams. With experience spanning real estate, technology, fashion and emerging business sectors, he combines strategic thinking with hands-on execution to identify opportunities, build scalable systems and create sustainable value for customers, investors and stakeholders.",
   },
   {
-    name: "Sales & Marketing",
-    members: [
-      { role: "Head of Sales", photo: headshot("1472099645785-5658abf4ff4e") },
-      { role: "Senior Property Advisor", photo: headshot("1494790108377-be9c29b29330") },
-      { role: "Property Advisor", photo: headshot("1519345182560-3f2917c472ef") },
-    ],
+    role: "Emmanuel Aiyepada",
+    department: "Head, Branding and Corporate Communications",
+    photo: "/team/Emmanuel.jpeg",
+    bio: "A brand strategist and corporate communications professional with close to a decade of experience across branding, strategic communications, public relations and stakeholder engagement. As Head of Branding and Corporate Communications, Emmanuel drives the organization’s brand positioning, communications and market visibility. His experience spans real estate, technology, oil and gas, public sector and nonprofit sectors, combining strategic thinking, creative execution and leadership development to strengthen brands and drive sustainable growth.",
   },
   {
-    name: "Client Services & Operations",
-    members: [
-      { role: "Client Relations Lead", photo: headshot("1544725176-7c40e5a71c5e") },
-      { role: "Operations Manager", photo: headshot("1487412720507-e7ab37603c6f") },
-      { role: "Legal & Compliance Officer", photo: headshot("1500917293891-ef795e70e1f6") },
-    ],
+    role: "Ogbonnaya Chukwu Samuel",
+    department: "Head, Operations",
+    photo: "/team/Ogbonnaya.jpeg",
+    bio: "A real estate professional and strategic business leader with over 17 years of experience across sales, business development, operations and market growth. As Head of Operations, Ogbonnaya drives operational efficiency, team performance and business growth. With expertise spanning real estate, agrochemicals, industrial chemicals and cosmetics, he combines commercial strategy, industry knowledge and people leadership to build high-performing teams and create sustainable value.",
+  },
+  {
+    role: "Godswill Onyegbule",
+    department: "Head, IT",
+    photo: "/team/Godswill.jpg",
+    bio: "A technology professional, real estate consultant and business strategist with over 10 years of experience across technology, sales and property advisory. As Head of IT, Godswill provides strategic direction for the organisation’s technology and digital systems. With a background spanning technology leadership and real estate investment advisory, he combines technical expertise, commercial insight and strategic thinking to improve business processes and help clients make smarter investment decisions.",
   },
 ];
 
@@ -47,10 +46,10 @@ export default function TeamPage() {
       <Navbar />
 
       <main className="flex-1 bg-neutral-50 pb-24 pt-32 sm:pt-26">
-        <section className="mx-auto max-w-8xl px-10" data-navbar-variant="dark">
-          <div className="relative flex min-h-[360px] flex-col justify-end overflow-hidden rounded-[2rem] bg-neutral-950 px-6 pb-10 pt-10 sm:min-h-[420px] sm:px-10 lg:min-h-[480px] lg:px-16">
+        <section className="mx-auto max-w-8xl px-4 sm:px-6 lg:px-10" data-navbar-variant="dark">
+          <div className="relative flex min-h-[360px] flex-col justify-end overflow-hidden rounded-[2rem] bg-neutral-950 px-6 pb-10 pt-10 sm:min-h-[420px] sm:px-10 lg:min-h-[580px] lg:px-16">
             <Image
-              src="/abt-hero.jpg"
+              src="/team-hero.jpg"
               alt="The DEGSS team"
               fill
               priority
@@ -74,59 +73,52 @@ export default function TeamPage() {
           </div>
         </section>
 
-        <section className="mx-auto max-w-7xl px-6 pt-16 sm:px-10 sm:pt-20 lg:px-16">
-          <div className="max-w-2xl">
+        <section className="mx-auto max-w-7xl px-6 pt-20 sm:px-10 sm:pt-28 lg:px-16">
+          <div className="flex items-center justify-between">
             <span className="text-sm font-medium uppercase tracking-[0.2em] text-neutral-400">
-              Who we are
+              Meet the Team
             </span>
-            <h2 className="mt-3 text-3xl font-bold tracking-tight text-neutral-950 sm:text-4xl">
-              A team built for people who think ahead
-            </h2>
-            <p className="mt-5 text-neutral-600">
-              From first enquiry to closing day, every DEGSS team member brings the
-              same commitment: clear advice, local expertise, and a genuine interest
-              in helping you make the right decision.
-            </p>
+          </div>
+
+          <div className="mt-8 grid gap-10 lg:grid-cols-2 lg:gap-16">
+            <div>
+              <h2 className="text-3xl font-bold tracking-tight text-neutral-950 sm:text-4xl">
+                The people behind the places.{" "}
+                <span className="text-neutral-400">
+                  Good places don&apos;t happen by accident.
+                </span>
+              </h2>
+            </div>
+
+            <div className="space-y-10">
+              <div>
+                <p className="mt-3 text-neutral-600">
+                  They are imagined, questioned, planned, built and cared for by people who believe the details matter.
+                </p>
+                <p className="mt-3 text-neutral-600">
+                  Meet the people helping DEGSS turn possibility into places.
+                </p>
+              </div>
+            </div>
           </div>
         </section>
 
-        {departments.map((department) => (
-          <section
-            key={department.name}
-            className="mx-auto max-w-7xl px-6 pt-16 sm:px-10 lg:px-16"
-          >
-            <h3 className="text-sm font-medium uppercase tracking-[0.2em] text-neutral-400">
-              {department.name}
-            </h3>
-
-            <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {department.members.map(({ role, photo }) => (
-                <div
-                  key={role}
-                  className="rounded-3xl border border-black/5 bg-white p-8"
-                >
-                  <Image
-                    src={photo}
-                    alt={role}
-                    width={64}
-                    height={64}
-                    className="h-16 w-16 rounded-full object-cover"
-                  />
-                  <h4 className="mt-6 text-lg font-semibold text-neutral-950">
-                    {role}
-                  </h4>
-                  <p className="mt-1 text-sm text-neutral-400">
-                    {department.name}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </section>
-        ))}
+        <section className="mx-auto max-w-7xl px-6 pt-20 sm:px-10 lg:px-16">
+          <TeamGrid members={teamMembers} />
+        </section>
 
         <section className="mx-auto max-w-7xl px-6 pt-20 sm:px-10 sm:pt-28 lg:px-16">
-          <div className="flex flex-col items-start justify-between gap-8 rounded-3xl bg-neutral-950 px-8 py-12 sm:px-12 sm:py-16 lg:flex-row lg:items-center">
-            <div>
+          <div className="relative flex flex-col items-start justify-between gap-8 overflow-hidden rounded-3xl bg-[#39548b] px-8 py-12 sm:px-12 sm:py-16 lg:flex-row lg:items-center">
+            <Image
+              src="/icon-light.png"
+              alt=""
+              aria-hidden="true"
+              width={1700}
+              height={1700}
+              className="pointer-events-none absolute -right-10 top-1/2 h-[150%] w-auto -translate-y-1/2 opacity-6"
+            />
+
+            <div className="relative z-10">
               <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
                 Want to work with us?
               </h2>
@@ -137,7 +129,7 @@ export default function TeamPage() {
             </div>
             <Link
               href="/contact"
-              className="flex items-center justify-center gap-1.5 rounded-full bg-white px-6 py-3.5 text-sm font-medium text-neutral-950 transition-colors hover:bg-white/90"
+              className="relative z-10 flex items-center justify-center gap-1.5 rounded-full bg-white px-6 py-3.5 text-sm font-medium text-neutral-950 transition-colors hover:bg-white/90"
             >
               Get in touch
               <ArrowUpRightIcon className="h-3.5 w-3.5" />
