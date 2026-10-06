@@ -54,9 +54,6 @@ export default async function ServicePage({
 
   const label = service?.label ?? content!.label;
   const tagline = service?.description || content?.tagline || "";
-  const iconName: ServiceIconName =
-    service?.iconName ?? content?.iconName ?? "BuildingIcon";
-  const Icon = iconMap[iconName];
   const heroImage =
     content?.heroImage ??
     "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=1600&auto=format&fit=crop";
@@ -92,9 +89,14 @@ export default async function ServicePage({
         <section className="mx-auto max-w-7xl px-6 pt-12 sm:px-10 sm:pt-16 lg:px-16">
           <div className="grid gap-10 lg:grid-cols-3 lg:gap-16">
             <div className="lg:col-span-2">
-              <span className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#39548b]/10 text-[#39548b]">
-                <Icon className="h-7 w-7" />
-              </span>
+              <div className="h-14 w-14 overflow-hidden rounded-2xl">
+                {/* eslint-disable-next-line @next/next/no-img-element -- admin-entered URLs can be any domain */}
+                <img
+                  src={heroImage}
+                  alt=""
+                  className="h-full w-full object-cover"
+                />
+              </div>
               <p className="mt-6 text-lg leading-7 text-neutral-600">{intro}</p>
 
               <h2 className="mt-12 text-lg font-semibold text-neutral-950">

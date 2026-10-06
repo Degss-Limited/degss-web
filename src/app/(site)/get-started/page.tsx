@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Script from "next/script";
 import Navbar from "@/components/Navbar";
 import { buildMetadata } from "@/lib/seo";
 import BudgetField from "./BudgetField";
@@ -33,6 +34,7 @@ export default async function GetStartedPage({
   searchParams: Promise<{ sent?: string; error?: string }>;
 }) {
   const { sent, error } = await searchParams;
+  const turnstileSiteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
 
   return (
     <>
@@ -56,7 +58,12 @@ export default async function GetStartedPage({
                   Thanks — we&apos;ve got your details. Our team will reach out within 24 hours.
                 </p>
               )}
-              {error && (
+              {error === "captcha" && (
+                <p className="mt-6 rounded-xl bg-red-50 px-4 py-3 text-sm font-medium text-red-700">
+                  Please complete the verification challenge and try again.
+                </p>
+              )}
+              {error && error !== "captcha" && (
                 <p className="mt-6 rounded-xl bg-red-50 px-4 py-3 text-sm font-medium text-red-700">
                   Something went wrong. Please fill in your name, WhatsApp number, and email and try again.
                 </p>
@@ -134,6 +141,18 @@ export default async function GetStartedPage({
                     className="w-full resize-y rounded-xl border border-black/10 bg-white px-4 py-3 text-sm text-neutral-950 placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-neutral-950/10"
                   />
                 </div>
+
+                {turnstileSiteKey && (
+                  <>
+                    <Script
+                      src="https://challenges.cloudflare.com/turnstile/v0/api.js"
+                      strategy="afterInteractive"
+                      async
+                      defer
+                    />
+                    <div className="cf-turnstile" data-sitekey={turnstileSiteKey} />
+                  </>
+                )}
 
                 <div className="flex flex-col items-start gap-3 pt-2 sm:flex-row sm:items-center sm:gap-5">
                   <button
