@@ -7,7 +7,7 @@ export default function PageHero({
   imageAlt,
 }: {
   title: string;
-  description: string;
+  description?: string;
   image: string;
   imageAlt: string;
 }) {
@@ -34,9 +34,11 @@ export default function PageHero({
           <h1 className="text-5xl font-bold leading-[0.95] tracking-tight text-white sm:text-6xl md:text-7xl">
             {title}
           </h1>
-          <p className="max-w-sm text-lg leading-7 text-white/70 lg:text-right">
-            {description}
-          </p>
+          {description && (
+            <p className="max-w-sm text-lg leading-7 text-white/70 lg:text-right">
+              {description}
+            </p>
+          )}
         </div>
       </div>
     </section>

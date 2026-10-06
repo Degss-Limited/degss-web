@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import Footer from "@/components/Footer";
 import { SITE_NAME, SITE_URL, DEFAULT_OG_IMAGE } from "@/lib/seo";
+import VisitTracker from "@/components/VisitTracker";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -89,8 +89,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
         />
+        <VisitTracker />
         {children}
-        <Footer />
       </body>
     </html>
   );

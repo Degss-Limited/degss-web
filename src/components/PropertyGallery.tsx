@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 
@@ -40,15 +39,15 @@ export default function PropertyGallery({
         <button
           type="button"
           onClick={() => setLightboxIndex(0)}
-          className="group relative aspect-4/3 overflow-hidden rounded-3xl bg-neutral-200 sm:col-span-2"
+          className={`group relative aspect-4/3 overflow-hidden rounded-3xl bg-neutral-200 ${
+            secondary ? "sm:col-span-2" : "sm:col-span-3"
+          }`}
         >
-          <Image
+          {/* eslint-disable-next-line @next/next/no-img-element -- admin-entered URLs can be any domain */}
+          <img
             src={main}
             alt={alt}
-            fill
-            priority
-            sizes="(min-width: 640px) 66vw, 100vw"
-            className="object-cover transition-transform duration-500 group-hover:scale-105"
+            className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
           />
           {images.length > 1 && (
             <span className="absolute bottom-4 right-4 rounded-full bg-white px-4 py-2 text-xs font-medium text-neutral-950 shadow-sm">
@@ -63,12 +62,11 @@ export default function PropertyGallery({
             onClick={() => setLightboxIndex(1)}
             className="group relative aspect-4/3 overflow-hidden rounded-3xl bg-neutral-200 sm:aspect-auto"
           >
-            <Image
+            {/* eslint-disable-next-line @next/next/no-img-element -- admin-entered URLs can be any domain */}
+            <img
               src={secondary}
               alt=""
-              fill
-              sizes="(min-width: 640px) 33vw, 100vw"
-              className="object-cover transition-transform duration-500 group-hover:scale-105"
+              className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
             />
           </button>
         )}
@@ -83,12 +81,11 @@ export default function PropertyGallery({
               onClick={() => setLightboxIndex(i + 2)}
               className="relative h-20 w-28 shrink-0 overflow-hidden rounded-xl bg-neutral-200"
             >
-              <Image
+              {/* eslint-disable-next-line @next/next/no-img-element -- admin-entered URLs can be any domain */}
+              <img
                 src={src}
                 alt=""
-                fill
-                sizes="112px"
-                className="object-cover"
+                className="absolute inset-0 h-full w-full object-cover"
               />
             </button>
           ))}
@@ -117,12 +114,11 @@ export default function PropertyGallery({
             </div>
 
             <div className="relative mt-4 flex-1">
-              <Image
+              {/* eslint-disable-next-line @next/next/no-img-element -- admin-entered URLs can be any domain */}
+              <img
                 src={images[lightboxIndex]}
                 alt={alt}
-                fill
-                sizes="100vw"
-                className="object-contain"
+                className="absolute inset-0 h-full w-full object-contain"
               />
 
               {images.length > 1 && (

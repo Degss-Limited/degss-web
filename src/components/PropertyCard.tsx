@@ -1,10 +1,22 @@
-import Image from "next/image";
 import Link from "next/link";
-import type { Property } from "@/data/properties";
+import type { Property } from "@/lib/data/properties";
 
 export default function PropertyCard({ property }: { property: Property }) {
-  const { slug, title, price, description, image, beds, baths, sqft } =
-    property;
+  const {
+    slug,
+    title,
+    price,
+    description,
+    image,
+    beds,
+    baths,
+    sqft,
+    lotSize,
+    listingType,
+    status,
+  } = property;
+  const isLand = listingType === "Land";
+  const statusLabel = status === "Available" ? "For Sale" : status;
 
   return (
     <Link
@@ -13,13 +25,15 @@ export default function PropertyCard({ property }: { property: Property }) {
     >
       <div className="p-3 pb-0">
         <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
-          <Image
+          {/* eslint-disable-next-line @next/next/no-img-element -- admin-entered URLs can be any domain */}
+          <img
             src={image}
             alt={title}
-            fill
-            sizes="(min-width: 1024px) 50vw, 100vw"
-            className="object-cover transition-transform duration-500 group-hover:scale-105"
+            className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
           />
+          <span className="absolute left-4 top-4 rounded-full bg-neutral-950/70 px-3 py-1.5 text-xs font-medium text-white backdrop-blur-sm">
+            {statusLabel}
+          </span>
         </div>
       </div>
 
@@ -27,18 +41,28 @@ export default function PropertyCard({ property }: { property: Property }) {
         <div className="flex items-center justify-between gap-4">
           <h3 className="text-lg font-semibold text-neutral-950">{title}</h3>
           <span className="whitespace-nowrap text-lg font-semibold text-neutral-950">
-            {price}
+            ₦{price}
           </span>
         </div>
 
         <p className="text-sm leading-6 text-neutral-600">{description}</p>
 
         <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-neutral-600">
-          <span>{beds} Bedrooms</span>
-          <Dot />
-          <span>{baths} Bathrooms</span>
-          <Dot />
-          <span>{sqft} SQ.FT</span>
+          {isLand ? (
+            <>
+              <span>{lotSize}</span>
+              <Dot />
+              <span>{sqft} SQ.FT</span>
+            </>
+          ) : (
+            <>
+              <span>{beds} Bedrooms</span>
+              <Dot />
+              <span>{baths} Bathrooms</span>
+              <Dot />
+              <span>{sqft} SQ.FT</span>
+            </>
+          )}
         </div>
       </div>
     </Link>

@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import Navbar from "./Navbar";
 
 export default function Hero() {
@@ -27,22 +28,31 @@ export default function Hero() {
       <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-1 flex-col justify-end gap-10 px-6 pb-14 pt-40 sm:px-10 lg:px-16">
         <div className="flex flex-col items-start justify-between gap-8 lg:flex-row lg:items-end">
           <h1 className="max-w-3xl text-balance text-5xl font-bold leading-[0.95] tracking-tight text-white sm:text-6xl md:text-7xl">
-            Find a Place
+            Welcome to
             <br />
-            You&apos;ll Call Home
+            More.
           </h1>
           <p className="max-w-sm text-lg leading-7 text-white/60 lg:text-right">
-            DEGSS helps you find, compare, and secure the right property — fast and easily.
+            Real estate should give you more than somewhere to put your money.
+            It should create room for life, wealth, possibility and legacy.
           </p>
         </div>
 
-        <a
-          href="/properties"
-          className="flex w-fit items-center gap-2 rounded-full bg-white px-6 py-3.5 text-sm font-medium text-neutral-950 transition-colors hover:bg-white/90"
-        >
-          View properties
-          <ArrowUpRightIcon className="h-4 w-4" />
-        </a>
+        <div className="flex w-fit flex-col gap-3 sm:flex-row">
+          <Link
+            href="/properties"
+            className="flex items-center justify-center gap-2 rounded-full bg-white px-6 py-3.5 text-sm font-medium text-neutral-950 transition-colors hover:bg-white/90"
+          >
+            Explore properties
+            <ArrowUpRightIcon className="h-4 w-4" />
+          </Link>
+          <Link
+            href="/contact"
+            className="flex items-center justify-center gap-2 rounded-full border border-white/30 px-6 py-3.5 text-sm font-medium text-white transition-colors hover:bg-white/10"
+          >
+            Get in touch
+          </Link>
+        </div>
       </div>
 
       <button

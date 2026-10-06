@@ -1,10 +1,9 @@
 "use client";
 
-import Image from "next/image";
-
 export type TeamMember = {
-  role: string;
-  department: string;
+  id: string;
+  name: string;
+  title: string;
   photo: string;
   bio?: string;
 };
@@ -22,23 +21,22 @@ export default function TeamPhotoCard({
 }) {
   return (
     <div className="relative aspect-3/4 overflow-hidden rounded-3xl bg-neutral-100">
-      <Image
+      {/* eslint-disable-next-line @next/next/no-img-element -- admin-entered URLs can be any domain */}
+      <img
         src={member.photo}
-        alt={member.role}
-        fill
-        sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-        className="object-cover"
+        alt={member.name}
+        className="absolute inset-0 h-full w-full object-cover"
       />
       <div className="absolute inset-x-4 bottom-4 flex items-end justify-between gap-4 rounded-2xl bg-white/95 p-5 backdrop-blur-sm">
         <div>
-          <h4 className="text-lg font-semibold text-neutral-950">{member.role}</h4>
-          <p className="mt-0.5 text-sm text-neutral-500">{member.department}</p>
+          <h4 className="text-lg font-semibold text-neutral-950">{member.name}</h4>
+          <p className="mt-0.5 text-sm text-neutral-500">{member.title}</p>
         </div>
         {member.bio && (
           <button
             type="button"
             onClick={onOpen}
-            aria-label={`Read more about the ${member.role}`}
+            aria-label={`Read more about ${member.name}`}
             className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-neutral-950 text-white transition-transform hover:scale-105"
           >
             <ArrowUpRightIcon className="h-4 w-4" />
@@ -62,14 +60,15 @@ export default function TeamPhotoCard({
           </button>
 
           <h4 className="text-lg font-semibold text-neutral-950">
-            {member.role}
+            {member.name}
           </h4>
           <p className="mt-0.5 text-sm text-neutral-500">
-            {member.department}
+            {member.title}
           </p>
-          <p className="mt-4 text-sm leading-6 text-neutral-600">
-            {member.bio}
-          </p>
+          <div
+            className="mt-4 overflow-y-auto text-sm leading-6 text-neutral-600 [&_ol]:list-decimal [&_ol]:pl-5 [&_p+p]:mt-3 [&_ul]:list-disc [&_ul]:pl-5"
+            dangerouslySetInnerHTML={{ __html: member.bio }}
+          />
         </div>
       )}
     </div>
