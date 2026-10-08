@@ -1,66 +1,80 @@
 import Link from "next/link";
 import ConfirmSubmitButton from "@/components/admin/ConfirmSubmitButton";
 import EmptyState from "@/components/admin/EmptyState";
-import { listServices } from "@/lib/data/services";
-import { deleteServiceAction } from "./actions";
+import { listBlogPosts } from "@/lib/data/blog";
+import { deleteBlogPostAction } from "./actions";
 
-export default async function AdminServicesPage() {
-  const services = await listServices();
+export default async function AdminBlogPage() {
+  const posts = await listBlogPosts();
 
   return (
     <div>
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight">Services</h1>
+          <h1 className="text-2xl font-bold tracking-tight">Blog</h1>
           <p className="mt-1 text-sm text-neutral-500">
-            Populates the &quot;What We Do&quot; menu in the site navbar.
+            Shown on the public /blog page. Drafts stay hidden until published.
           </p>
         </div>
         <Link
-          href="/admin/services/new"
+          href="/admin/blog/new"
           className="rounded-full bg-neutral-950 px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-neutral-800"
         >
-          New service
+          New post
         </Link>
       </div>
 
       <div className="mt-6 space-y-3">
-        {services.length === 0 && (
+        {posts.length === 0 && (
           <div className="rounded-2xl border border-black/10 bg-white">
-            <EmptyState title="No services yet" />
+            <EmptyState title="No blog posts yet" />
           </div>
         )}
-        {services.map((service) => (
+        {posts.map((post) => (
           <div
-            key={service.id}
+            key={post.id}
             className="flex items-center justify-between gap-4 rounded-2xl border border-black/10 bg-white p-5"
           >
             <div className="flex min-w-0 items-center gap-4">
-              {service.heroImage && (
+              {post.coverImage && (
                 // eslint-disable-next-line @next/next/no-img-element -- admin-entered URLs can be any domain
                 <img
-                  src={service.heroImage}
+                  src={post.coverImage}
                   alt=""
-                  className="h-14 w-14 shrink-0 rounded-xl object-cover"
+                  className="h-14 w-20 shrink-0 rounded-xl object-cover"
                 />
               )}
               <div className="min-w-0">
-                <p className="font-medium text-neutral-950">{service.label}</p>
-                <p className="text-sm text-neutral-500">{service.description}</p>
-                <p className="mt-1 text-xs text-neutral-400">/services/{service.slug} &middot; {service.iconName}</p>
+                <div className="flex items-center gap-2">
+                  <p className="truncate font-medium text-neutral-950">{post.title}</p>
+                  <span
+                    className={`shrink-0 rounded-full px-2 py-0.5 text-[11px] font-medium ${
+                      post.status === "published"
+                        ? "bg-emerald-100 text-emerald-700"
+                        : "bg-neutral-100 text-neutral-500"
+                    }`}
+                  >
+                    {post.status === "published" ? "Published" : "Draft"}
+                  </span>
+                </div>
+                <p className="truncate text-sm text-neutral-500">{post.excerpt}</p>
+                <p className="mt-1 text-xs text-neutral-400">
+                  /blog/{post.slug}
+                  {post.author && <> &middot; {post.author}</>}
+                </p>
               </div>
             </div>
             <div className="flex shrink-0 items-center gap-2">
               <Link
-                href={`/admin/services/${service.id}/edit`}
+                href={`/admin/blog/${post.id}/edit`}
                 className="rounded-full border border-black/10 px-3 py-1.5 text-xs font-medium text-neutral-700 transition-colors hover:bg-neutral-100"
               >
                 Edit
               </Link>
-              <form action={deleteServiceAction}>
-                <input type="hidden" name="id" value={service.id} />
+              <form action={deleteBlogPostAction}>
+                <input type="hidden" name="id" value={post.id} />
                 <ConfirmSubmitButton
-                  confirmMessage={`Delete "${service.label}"?`}
+                  confirmMessage={`Delete "${post.title}"?`}
                   className="rounded-full border border-red-200 px-3 py-1.5 text-xs font-medium text-red-600 transition-colors hover:bg-red-50"
                 >
                   Delete

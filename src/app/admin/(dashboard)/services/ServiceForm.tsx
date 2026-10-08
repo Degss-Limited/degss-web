@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Field, SelectField, TextareaField } from "@/components/admin/fields";
+import { ImageUploadField } from "@/components/admin/ImageUploadField";
 import { SERVICE_ICON_NAMES, type Service } from "@/lib/data/services";
 
 export default function ServiceForm({
@@ -34,6 +35,27 @@ export default function ServiceForm({
         defaultValue={service?.iconName ?? "BuildingIcon"}
         options={SERVICE_ICON_NAMES.map((name) => ({ label: name, value: name }))}
         required
+      />
+
+      <ImageUploadField
+        label="Hero image"
+        name="heroImage"
+        defaultValue={service?.heroImage}
+        hint="Shown at the top of the /services/[slug] page."
+      />
+      <TextareaField
+        label="Intro"
+        name="intro"
+        defaultValue={service?.intro}
+        rows={4}
+        hint="The paragraph shown under the hero image on the service page."
+      />
+      <TextareaField
+        label="What's included"
+        name="features"
+        defaultValue={service?.features.join("\n")}
+        rows={5}
+        hint="One item per line — shown as the feature cards on the service page."
       />
 
       <div className="flex items-center gap-3">

@@ -18,6 +18,9 @@ export type Service = {
   label: string;
   description: string;
   iconName: ServiceIconName;
+  heroImage: string;
+  intro: string;
+  features: string[];
   sortOrder: number;
 };
 
@@ -26,6 +29,9 @@ export type ServiceInput = {
   label: string;
   description: string;
   iconName: ServiceIconName;
+  heroImage: string;
+  intro: string;
+  features: string[];
   sortOrder?: number;
 };
 
@@ -53,6 +59,9 @@ export async function listServices(): Promise<Service[]> {
     label: row.label,
     description: row.description,
     iconName: isServiceIconName(row.icon_name) ? row.icon_name : "BuildingIcon",
+    heroImage: row.hero_image ?? "",
+    intro: row.intro ?? "",
+    features: row.features ?? [],
     sortOrder: row.sort_order,
   }));
 }
@@ -74,6 +83,9 @@ export async function getServiceBySlug(slug: string): Promise<Service | null> {
     label: data.label,
     description: data.description,
     iconName: isServiceIconName(data.icon_name) ? data.icon_name : "BuildingIcon",
+    heroImage: data.hero_image ?? "",
+    intro: data.intro ?? "",
+    features: data.features ?? [],
     sortOrder: data.sort_order,
   };
 }
@@ -95,6 +107,9 @@ export async function getServiceById(id: string): Promise<Service | null> {
     label: data.label,
     description: data.description,
     iconName: isServiceIconName(data.icon_name) ? data.icon_name : "BuildingIcon",
+    heroImage: data.hero_image ?? "",
+    intro: data.intro ?? "",
+    features: data.features ?? [],
     sortOrder: data.sort_order,
   };
 }
@@ -108,6 +123,9 @@ export async function createService(input: ServiceInput) {
     label: input.label,
     description: input.description,
     icon_name: input.iconName,
+    hero_image: input.heroImage,
+    intro: input.intro,
+    features: input.features,
     ...(input.sortOrder !== undefined ? { sort_order: input.sortOrder } : {}),
   });
 
@@ -125,6 +143,9 @@ export async function updateService(id: string, input: ServiceInput) {
       label: input.label,
       description: input.description,
       icon_name: input.iconName,
+      hero_image: input.heroImage,
+      intro: input.intro,
+      features: input.features,
       ...(input.sortOrder !== undefined ? { sort_order: input.sortOrder } : {}),
     })
     .eq("id", id);

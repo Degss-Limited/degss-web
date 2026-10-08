@@ -2,22 +2,54 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import Navbar from "./Navbar";
 
-export default function Hero() {
+export const defaultHeroSlides = [
+  { src: "/hero-img.jpg", alt: "DEGSS residential building" },
+  { src: "/abt-hero.jpg", alt: "A DEGSS property" },
+  { src: "/team-hero.jpg", alt: "The DEGSS team at work" },
+];
+
+const SLIDE_INTERVAL_MS = 6000;
+
+export default function Hero({
+  slides = defaultHeroSlides,
+}: {
+  slides?: { src: string; alt: string }[];
+}) {
+  const [active, setActive] = useState(0);
+
+  useEffect(() => {
+    const id = setInterval(() => {
+      setActive((current) => (current + 1) % slides.length);
+    }, SLIDE_INTERVAL_MS);
+    return () => clearInterval(id);
+  }, [slides.length]);
+
   return (
     <section
       data-navbar-variant="dark"
       className="relative flex min-h-screen flex-col overflow-hidden bg-neutral-950"
     >
-      <Image
-        src="/hero-img.jpg"
-        alt="DEGSS residential building"
-        fill
-        priority
-        sizes="100vw"
-        className="object-cover"
-      />
+      <div className="absolute inset-0 h-full w-full">
+        {slides.map((slide, index) => (
+          <div
+            key={slide.src}
+            className="absolute inset-0 h-full w-full transition-transform duration-1000 ease-in-out"
+            style={{ transform: `translateX(${(index - active) * 100}%)` }}
+          >
+            <Image
+              src={slide.src}
+              alt={slide.alt}
+              fill
+              priority={index === 0}
+              sizes="100vw"
+              className="object-cover"
+            />
+          </div>
+        ))}
+      </div>
       <div
         aria-hidden="true"
         className="absolute inset-0 bg-linear-to-t from-black/85 via-black/40 to-black/30"
@@ -25,7 +57,7 @@ export default function Hero() {
 
       <Navbar />
 
-      <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-1 flex-col justify-end gap-10 px-6 pb-14 pt-40 sm:px-10 lg:px-16">
+      <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-1 flex-col justify-end gap-10 px-6 pb-14 pt-40 sm:px-10 lg:px-0">
         <div className="flex flex-col items-start justify-between gap-8 lg:flex-row lg:items-end">
           <h1 className="max-w-3xl text-balance text-5xl font-bold leading-[0.95] tracking-tight text-white sm:text-6xl md:text-7xl">
             Welcome to
@@ -53,6 +85,21 @@ export default function Hero() {
             Get in touch
           </Link>
         </div>
+      </div>
+
+      <div className="absolute bottom-14 right-6 z-10 flex gap-2 sm:right-10 lg:right-16">
+        {slides.map((slide, index) => (
+          <button
+            key={slide.src}
+            type="button"
+            onClick={() => setActive(index)}
+            aria-label={`Go to slide ${index + 1}`}
+            aria-current={index === active}
+            className={`h-1.5 rounded-full transition-all ${
+              index === active ? "w-8 bg-white" : "w-1.5 bg-white/40 hover:bg-white/60"
+            }`}
+          />
+        ))}
       </div>
 
       <button

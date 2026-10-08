@@ -34,7 +34,7 @@ export async function generateMetadata({
     title: label,
     description,
     path: `/services/${slug}`,
-    image: content?.heroImage,
+    image: service?.heroImage || content?.heroImage,
   });
 }
 
@@ -55,18 +55,21 @@ export default async function ServicePage({
   const label = service?.label ?? content!.label;
   const tagline = service?.description || content?.tagline || "";
   const heroImage =
-    content?.heroImage ??
+    service?.heroImage ||
+    content?.heroImage ||
     "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=1600&auto=format&fit=crop";
-  const intro = content?.intro ?? tagline;
+  const intro = service?.intro || content?.intro || tagline;
   const features =
-    content?.features && content.features.length > 0
-      ? content.features
-      : [
-          "Personalized consultation",
-          "Transparent, step-by-step process",
-          "Dedicated support from our team",
-          "Clear documentation throughout",
-        ];
+    service?.features && service.features.length > 0
+      ? service.features
+      : content?.features && content.features.length > 0
+        ? content.features
+        : [
+            "Personalized consultation",
+            "Transparent, step-by-step process",
+            "Dedicated support from our team",
+            "Clear documentation throughout",
+          ];
 
   const otherServices = (
     dbServices.length > 0
@@ -89,7 +92,7 @@ export default async function ServicePage({
         <section className="mx-auto max-w-7xl px-6 pt-12 sm:px-10 sm:pt-16 lg:px-16">
           <div className="grid gap-10 lg:grid-cols-3 lg:gap-16">
             <div className="lg:col-span-2">
-              <div className="h-14 w-14 overflow-hidden rounded-2xl">
+              <div className="overflow-hidden rounded-2xl">
                 {/* eslint-disable-next-line @next/next/no-img-element -- admin-entered URLs can be any domain */}
                 <img
                   src={heroImage}

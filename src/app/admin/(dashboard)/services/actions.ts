@@ -2,6 +2,8 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import { linesToArray } from "@/components/admin/fields";
+import { resolveUploadedImage } from "@/lib/cloudinary";
 import { withToast } from "@/lib/toast";
 import {
   createService,
@@ -11,14 +13,18 @@ import {
   type ServiceInput,
 } from "@/lib/data/services";
 
-function readServiceInput(formData: FormData): ServiceInput {
+async function readServiceInput(formData: FormData): Promise<ServiceInput> {
   const iconName = String(formData.get("iconName") ?? "");
+  const heroImage = await resolveUploadedImage(formData, "heroImage", "services");
 
   return {
     slug: String(formData.get("slug") ?? "").trim(),
     label: String(formData.get("label") ?? "").trim(),
     description: String(formData.get("description") ?? "").trim(),
     iconName: isServiceIconName(iconName) ? iconName : "BuildingIcon",
+    heroImage,
+    intro: String(formData.get("intro") ?? "").trim(),
+    features: linesToArray(formData.get("features")),
   };
 }
 
@@ -28,9 +34,8 @@ function revalidateServicePaths() {
 }
 
 export async function createServiceAction(formData: FormData) {
-  const input = readServiceInput(formData);
-
   try {
+    const input = await readServiceInput(formData);
     await createService(input);
   } catch (err) {
     console.error("[services] create failed:", err);
@@ -44,9 +49,8 @@ export async function createServiceAction(formData: FormData) {
 }
 
 export async function updateServiceAction(id: string, formData: FormData) {
-  const input = readServiceInput(formData);
-
   try {
+    const input = await readServiceInput(formData);
     await updateService(id, input);
   } catch (err) {
     console.error("[services] update failed:", err);

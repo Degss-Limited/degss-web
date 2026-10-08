@@ -1,10 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
-import Hero from "@/components/Hero";
+import Hero, { defaultHeroSlides } from "@/components/Hero";
 import TestimonialsSlider from "@/components/TestimonialsSlider";
+import VideoPlayer from "@/components/VideoPlayer";
 import WhatWeDoSlider, { type Pillar } from "@/components/WhatWeDoSlider";
 import { unsplash } from "@/data/properties";
 import { serviceContent } from "@/data/service-content";
+import { listHeroSlides } from "@/lib/data/heroSlides";
 import { listProperties, type Property } from "@/lib/data/properties";
 import { listTestimonials } from "@/lib/data/testimonials";
 
@@ -133,15 +135,20 @@ const coreValues = [
 ];
 
 export default async function Home() {
-  const [testimonials, properties] = await Promise.all([
+  const [testimonials, properties, heroSlidesFromDb] = await Promise.all([
     listTestimonials(),
     listProperties(),
+    listHeroSlides(),
   ]);
   const featuredProperties = properties.slice(0, 3);
+  const heroSlides =
+    heroSlidesFromDb.length > 0
+      ? heroSlidesFromDb.map((slide) => ({ src: slide.image, alt: slide.alt }))
+      : defaultHeroSlides;
 
   return (
     <>
-      <Hero />
+      <Hero slides={heroSlides} />
 
       <main className="flex-1 bg-neutral-50">
         {/* Opening thought */}
@@ -202,7 +209,7 @@ export default async function Home() {
           <div className="mx-auto grid max-w-7xl gap-10 px-6 sm:px-10 lg:grid-cols-2 lg:items-center lg:gap-16 lg:px-16">
             <div>
               <span className="text-sm font-medium uppercase tracking-[0.2em] text-neutral-400">
-                /Experience more (03)
+                Experience more
               </span>
               <h2 className="mt-6 text-4xl font-bold tracking-tight text-neutral-950 sm:text-5xl">
                 Real estate, with more to it.
@@ -223,12 +230,10 @@ export default async function Home() {
             </div>
 
             <div className="relative min-h-[320px] overflow-hidden rounded-3xl lg:min-h-[480px]">
-              <Image
-                src="/abt-img.jpg"
-                alt="DEGSS residential development"
-                fill
-                sizes="(min-width: 1024px) 50vw, 100vw"
-                className="object-cover"
+              <VideoPlayer
+                src="https://www.youtube.com/watch?v=OIPfnC1mHpk"
+                poster="/abt-img.jpg"
+                className="absolute inset-0 h-full w-full object-cover"
               />
             </div>
           </div>
@@ -391,10 +396,13 @@ export default async function Home() {
                 look beyond the obvious to understand what matters, and what
                 comes next.
               </p>
-              <span className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-white/80">
+              <Link
+                href="/blog"
+                className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-white/80 transition-colors hover:text-white"
+              >
                 Explore insights
                 <ArrowUpRightIcon className="h-3.5 w-3.5" />
-              </span>
+              </Link>
             </div>
           </div>
         </section>

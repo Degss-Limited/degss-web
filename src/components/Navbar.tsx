@@ -79,6 +79,7 @@ const staticNavItems: NavItem[] = [
     ],
   },
   { label: "Properties", href: "/properties" },
+  { label: "Blog", href: "/blog" },
   { label: "Contact us", href: "/contact" },
 ];
 

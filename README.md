@@ -42,10 +42,11 @@ configured, and `/admin` will show a warning banner instead of crashing.
 ### Notes on scope
 
 - Editable via `/admin`: properties, services (the navbar's "What We Do"
-  menu), team members, FAQs, and the Contact/Get Started form submissions.
+  menu), blog posts (the DEGSS journal), team members, FAQs, homepage hero
+  slideshow images, and the Contact/Get Started form submissions.
 - Not editable via `/admin`: freeform marketing copy (the About page,
-  Terms, Privacy Policy, homepage hero text) — those stay in their page
-  files under `src/app/(site)/`.
+  Terms, Privacy Policy, homepage hero headline/subtext) — those stay in
+  their page files under `src/app/(site)/`.
 - Images for properties, team members, and the main property photo are
   plain URLs (paste a link to an already-hosted image) rather than file
   uploads, to keep the admin simple. There's no Supabase Storage bucket

@@ -23,18 +23,16 @@ export default function PropertyCard({ property }: { property: Property }) {
       href={`/properties/${slug}`}
       className="group block overflow-hidden rounded-3xl border border-black/10 bg-white transition-shadow hover:shadow-lg hover:shadow-black/5"
     >
-      <div className="p-3 pb-0">
-        <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
-          {/* eslint-disable-next-line @next/next/no-img-element -- admin-entered URLs can be any domain */}
-          <img
-            src={image}
-            alt={title}
-            className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-          />
-          <span className="absolute left-4 top-4 rounded-full bg-neutral-950/70 px-3 py-1.5 text-xs font-medium text-white backdrop-blur-sm">
-            {statusLabel}
-          </span>
-        </div>
+      <div className="relative aspect-[4/3] overflow-hidden">
+        {/* eslint-disable-next-line @next/next/no-img-element -- admin-entered URLs can be any domain */}
+        <img
+          src={image}
+          alt={title}
+          className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+        />
+        <span className="absolute left-4 top-4 rounded-full bg-neutral-950/70 px-3 py-1.5 text-xs font-medium text-white backdrop-blur-sm">
+          {statusLabel}
+        </span>
       </div>
 
       <div className="flex flex-col gap-3 p-6">

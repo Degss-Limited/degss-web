@@ -1,5 +1,16 @@
 export type IconProps = { className?: string };
 
+export function SlidesIcon({ className }: IconProps) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" className={className}>
+      <rect x="3.5" y="5.5" width="17" height="11" rx="1.8" stroke="currentColor" strokeWidth="1.7" />
+      <path d="M8.5 12.2L10.8 9.7L13.3 12.7L15.3 10.3L18.5 13.8" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
+      <circle cx="8" cy="9" r="1" fill="currentColor" />
+      <path d="M6.5 19.5H17.5" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" />
+    </svg>
+  );
+}
+
 export function GridIcon({ className }: IconProps) {
   return (
     <svg viewBox="0 0 24 24" fill="none" className={className}>
@@ -51,6 +62,16 @@ export function StarIcon({ className }: IconProps) {
         strokeWidth="1.7"
         strokeLinejoin="round"
       />
+    </svg>
+  );
+}
+
+export function NewspaperIcon({ className }: IconProps) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" className={className}>
+      <rect x="3.5" y="5.5" width="13" height="13" rx="1.5" stroke="currentColor" strokeWidth="1.7" />
+      <path d="M16.5 8.5H18.5C19.6 8.5 20.5 9.4 20.5 10.5V16.5C20.5 17.6 19.6 18.5 18.5 18.5H8.5" stroke="currentColor" strokeWidth="1.7" strokeLinejoin="round" />
+      <path d="M6.5 8.5H13.5M6.5 11.5H13.5M6.5 14.5H10.5" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" />
     </svg>
   );
 }
