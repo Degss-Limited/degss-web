@@ -14,7 +14,7 @@ const quickLinks = [
 
 const socialLinks = [
   { label: "Facebook", href: "https://www.facebook.com/people/Degss-Limited/61580249255835/", icon: FacebookIcon },
-  // { label: "X", href: "#", icon: XIcon },
+  { label: "X", href: "https://x.com/DegssLimited", icon: XIcon },
   { label: "Instagram", href: "https://www.instagram.com/degsslimited", icon: InstagramIcon },
   // { label: "LinkedIn", href: "#", icon: LinkedInIcon },
 ];
@@ -88,7 +88,7 @@ export default function Footer() {
             <div>
               <h3 className="text-base font-semibold">Location</h3>
               <address className="mt-5 space-y-3 text-white/60 not-italic">
-                <p>4, Adedayo Ogidan Close, Fidiso Estate (By Green Park Estate) Abijo, Ibeju-Lekki, Lagos.</p>
+                <p>4, Adedayo Ogidan Close, Green Park Estate, Abijo, Lagos.</p>
               </address>
             </div>
           </div>

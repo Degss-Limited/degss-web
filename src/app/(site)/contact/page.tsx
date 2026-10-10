@@ -13,7 +13,7 @@ export const metadata = buildMetadata({
 });
 
 const address =
-  "4, Adedayo Ogidan Close, Fidiso Estate (By Green Park Estate) Abijo, Ibeju-Lekki, Lagos.";
+  "4, Adedayo Ogidan Close, Green Park Estate, Abijo, Lagos.";
 
 const contactCards = [
   {

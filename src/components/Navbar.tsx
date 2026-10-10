@@ -85,6 +85,7 @@ const staticNavItems: NavItem[] = [
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
+  const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
   const [overDark, setOverDark] = useState(false);
   const [serviceChildren, setServiceChildren] = useState<NavChild[]>(
     defaultServiceChildren
@@ -213,7 +214,7 @@ export default function Navbar() {
                             href={child.href}
                             className="group/card flex items-start gap-3 rounded-2xl p-3 transition-colors hover:bg-black/[0.04]"
                           >
-                            <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#39548b]/10 text-[#39548b] transition-colors group-hover/card:bg-[#39548b] group-hover/card:text-white">
+                            <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#39548b]/10 text-[#39548b] transition-colors group-hover/card:bg-[#ee3442] group-hover/card:text-white">
                               {child.icon && <child.icon className="h-5 w-5" />}
                             </span>
                             <span className="flex flex-col gap-1 pt-0.5">
@@ -223,7 +224,7 @@ export default function Navbar() {
                               <span className="text-sm italic text-neutral-500">
                                 {child.description}
                               </span>
-                              <span className="mt-1 inline-flex items-center gap-1.5 text-sm font-semibold text-[#39548b]">
+                              <span className="mt-1 inline-flex items-center gap-1.5 text-sm font-medium text-neutral-950 transition-colors group-hover/card:text-[#ee3442]">
                                 Explore {child.label}
                                 <ArrowUpRightIcon className="h-3.5 w-3.5 transition-transform duration-150 group-hover/card:translate-x-0.5 group-hover/card:-translate-y-0.5" />
                               </span>
@@ -285,31 +286,39 @@ export default function Navbar() {
           {navItems.map((item) =>
             item.children ? (
               <div key={item.label} className="flex flex-col">
-                <span className="px-4 pb-1 pt-2 text-xs font-semibold uppercase tracking-wide text-neutral-400">
-                  {item.label}
-                </span>
-                {item.children.map((child) =>
+                {item.label === "What We Do" ? (
+                  <button
+                    type="button"
+                    onClick={() => setMobileServicesOpen((v) => !v)}
+                    aria-expanded={mobileServicesOpen}
+                    className="flex items-center justify-between rounded-full px-4 py-2.5 text-sm font-medium text-neutral-700 hover:bg-black/5 hover:text-neutral-950"
+                  >
+                    {item.label}
+                    <ChevronDownIcon
+                      className={`h-3.5 w-3.5 transition-transform duration-200 ${
+                        mobileServicesOpen ? "rotate-180" : ""
+                      }`}
+                    />
+                  </button>
+                ) : (
+                  <span className="px-4 pb-1 pt-2 text-xs font-semibold uppercase tracking-wide text-neutral-400">
+                    {item.label}
+                  </span>
+                )}
+                {(item.label !== "What We Do" || mobileServicesOpen) &&
+                item.children.map((child) =>
                   child.description ? (
                     <Link
                       key={child.label}
                       href={child.href}
                       onClick={() => setOpen(false)}
-                      className="flex items-start gap-3 rounded-2xl px-4 py-2.5 hover:bg-black/5"
+                      className="group flex items-center gap-3 rounded-xl px-4 py-2.5 hover:bg-black/5"
                     >
-                      <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#39548b]/10 text-[#39548b]">
-                        {child.icon && <child.icon className="h-5 w-5" />}
+                      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#39548b]/10 text-[#39548b] transition-colors group-hover:bg-[#ee3442] group-hover:text-white">
+                        {child.icon && <child.icon className="h-4.5 w-4.5" />}
                       </span>
-                      <span className="flex flex-col gap-1 pt-0.5">
-                        <span className="text-sm font-semibold text-neutral-950">
-                          {child.label}
-                        </span>
-                        <span className="text-sm italic text-neutral-500">
-                          {child.description}
-                        </span>
-                        <span className="mt-0.5 inline-flex items-center gap-1.5 text-sm font-semibold text-[#39548b]">
-                          Explore {child.label}
-                          <ArrowUpRightIcon className="h-3.5 w-3.5" />
-                        </span>
+                      <span className="text-sm font-medium text-neutral-700 group-hover:text-neutral-950">
+                        {child.label}
                       </span>
                     </Link>
                   ) : (

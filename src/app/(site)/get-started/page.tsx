@@ -31,10 +31,13 @@ const timelines = [
 export default async function GetStartedPage({
   searchParams,
 }: {
-  searchParams: Promise<{ sent?: string; error?: string }>;
+  searchParams: Promise<{ sent?: string; error?: string; service?: string }>;
 }) {
-  const { sent, error } = await searchParams;
+  const { sent, error, service } = await searchParams;
   const turnstileSiteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
+  const prefilledRequirement = service
+    ? `I'm interested in ${service.trim().slice(0, 200)}. `
+    : undefined;
 
   return (
     <>
@@ -138,6 +141,7 @@ export default async function GetStartedPage({
                     name="requirement"
                     rows={5}
                     placeholder="Write your message here..."
+                    defaultValue={prefilledRequirement}
                     className="w-full resize-y rounded-xl border border-black/10 bg-white px-4 py-3 text-sm text-neutral-950 placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-neutral-950/10"
                   />
                 </div>
